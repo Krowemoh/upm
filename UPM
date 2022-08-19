@@ -138,6 +138,9 @@
                 PRINT '-> Cataloging ' : PACKAGE.NAME : '.'
                 EXECUTE 'CATALOG ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
             END
+        END ELSE
+            PRINT '-> Cataloging ' : PACKAGE.NAME : '.'
+            EXECUTE 'CATALOG ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
         END
 *
         PRINT PACKAGE.NAME : ' installed to ' : INSTALL.LOCATION : '.'
