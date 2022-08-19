@@ -224,20 +224,20 @@ UNDEF:NULL
     NUMBER.OF.LINES = DCOUNT(CODE.CONTENT,@AM)
 *
     SYMBOLS = ''
-    CTR = 0 
+    CTR = 1 
 *
     LOOP UNTIL CTR > NUMBER.OF.LINES DO
-        CTR = CTR + 1
         LINE = CODE.CONTENT<CTR>
+        CTR = CTR + 1
 *
-        IF INDEX(LINE,"$DEFINE",1) # 0 THEN
+        IF INDEX(LINE,'$DEFINE',1) # 0 AND INDEX(LINE,'"',1) = 0 AND INDEX(LINE,"'",1) = 0 THEN
             LINE = TRIM(LINE)
             SYMBOL = FIELD(LINE,' ',2)
             SYMBOLS<-1> = SYMBOL
             CONTINUE
         END
 *
-        IF INDEX(LINE,'$IFDEF',1) # 0 THEN
+        IF INDEX(LINE,'$IFDEF',1) # 0 AND INDEX(LINE,'"',1) = 0 AND INDEX(LINE,"'",1) = 0 THEN
             LINE = TRIM(LINE)
             SYMBOL = FIELD(LINE,' ',2)
 *
@@ -245,16 +245,15 @@ UNDEF:NULL
                 CONTINUE
             END
 *
-            CTR = CTR + 1
             LINE = CODE.CONTENT<CTR>
             STACK = 1
 *
-            LOOP UNTIL STACK # 0 DO
-                IF INDEX(LINE,'$IFDEF',1) # 0 THEN
+            LOOP UNTIL STACK = 0 DO
+                IF INDEX(LINE,'$IFDEF',1) # 0 AND INDEX(LINE,'"',1) = 0 AND INDEX(LINE,"'",1) = 0 THEN
                     STACK = STACK + 1
                 END
 *
-                IF INDEX(LINE,'$ENDDEF',1) # 0 THEN
+                IF INDEX(LINE,'$ENDIF',1) # 0 AND INDEX(LINE,'"',1) = 0 AND INDEX(LINE,"'",1) = 0 THEN
                     STACK = STACK - 1
                 END
 *
@@ -273,6 +272,8 @@ UNDEF:NULL
         CODE.LINES<-1> = LINE
 *
     REPEAT
+*
+    RETURN
 *
 * END OF PROGRAM.
 *
