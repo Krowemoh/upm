@@ -171,6 +171,12 @@ GET.PACKAGES:NULL
     PACKAGES<3,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Universe Package Manager.'
     PACKAGES<3,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/upm/main/UPM'
 *
+    PACKAGES<4,PACKAGE.NAME.ATTRIBUTE> = 'AAE'
+    PACKAGES<4,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<4,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/aae'
+    PACKAGES<4,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'An alternative alternative line editor for Universe and D3'
+    PACKAGES<4,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/aae/main/AAE'
+*
     NUMBER.OF.PACKAGES = DCOUNT(PACKAGES,@AM)
 *
     RETURN
