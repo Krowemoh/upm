@@ -102,7 +102,7 @@
             END
         END
 *
-        CURL.COMMAND = 'curl --silent ' : SOURCE.CODE
+        CURL.COMMAND = 'curl --silent ' : SOURCE.CODE : '?foo=' : TIME()
         CURL.COMMAND = 'SH -c "' : CURL.COMMAND : '"'
 *
         EXECUTE CURL.COMMAND CAPTURING CODE.CONTENT
