@@ -1,0 +1,208 @@
+*ASI********************************************************************
+*                                                                      *
+* Copyright 2022 - Asynchron Systems Inc.                              *
+*                                                                      *
+* THIS PROGRAM IS THE EXCLUSIVE PROPERTY OF ASYNCHRON SYSTEMS INC. IT  *
+* MAY NOT BE USED, SOLD, DISTRIBUTED OR REPRODUCED BY ANY MEANS WITHOUT*
+* THE EXPRESS WRITTEN CONSENT OF ASYNCHRON SYSTEMS INC.                *
+*                                                                      *
+* Create Date  Req#  Who  Description                                  *
+* 18 AUG 2022  N/A   NT   Universe Package Manager                     *
+*                                                                      *
+************************************************************************
+* Special Instructions                                                 *
+*                                                                      *
+************************************************************************
+* Change History                                                       *
+*                                                                      *
+* Change Date  Req#  Who  Description                                  *
+*                                                                      *
+************************************************************************
+*
+    EQU TRUE TO 1
+    EQU FALSE TO 0
+*
+    EQU PACKAGE.NAME.ATTRIBUTE TO 1
+    EQU PACKAGE.VERSION.ATTRIBUTE TO 2
+    EQU PACKAGE.REPOSITORY.ATTRIBUTE TO 3
+    EQU PACKAGE.DESCRIPTION.ATTRIBUTE TO 4
+    EQU PACKAGE.SOURCE.CODE.ATTRIBUTE TO 5
+*
+    @USER1 = 'UPM'
+    @USER2 = 'UPM'
+*
+    VOC = 'MD'
+*
+    OPEN '',VOC TO VOC.FILE ELSE
+        PRINT 'Unable to open file:  VOC - Press RETURN':
+        PRINT
+        RETURN
+    END
+*
+    GOSUB GET.PACKAGES
+*
+    COMMAND = SENTENCE()
+*
+    COMMAND = CHANGE(COMMAND,' TRAP','')
+*
+    NUMBER.OF.ARGUMENTS = DCOUNT(COMMAND,' ')
+*
+    VERB = FIELD(COMMAND,' ',2)
+*
+    ACTION = FIELD(COMMAND,' ',3)
+*
+    IF VERB = 'SHOW' THEN
+        GOSUB PROCESS.SHOW.COMMAND
+*
+    END ELSE IF VERB = 'INSTALL' THEN
+        IF ACTION = '' THEN
+            PRINT 'No changes made.'
+            PRINT
+            RETURN
+        END
+*
+        PACKAGE.POS = 0
+*
+        FOR I = 1 TO NUMBER.OF.PACKAGES
+            PACKAGE.NAME = PACKAGES<I,PACKAGE.NAME.ATTRIBUTE>
+            IF ACTION = PACKAGE.NAME THEN
+                PACKAGE.POS = I
+                EXIT
+            END
+        NEXT I
+*
+        IF PACKAGE.POS = 0 THEN
+            PRINT 'Package not found.'
+            PRINT
+            RETURN
+        END
+*
+        INSTALL.LOCATION = FIELD(COMMAND,' ',4)
+        IF INSTALL.LOCATION = '' THEN INSTALL.LOCATION = 'BP'
+*
+        OPEN '',INSTALL.LOCATION TO INSTALL.FILE ELSE
+            PRINT 'Unable to open package installation location, ' : INSTALL.LOCATION : '.'
+            PRINT
+            RETURN
+        END
+*
+        PACKAGE.NAME = PACKAGES<PACKAGE.POS,PACKAGE.NAME.ATTRIBUTE>
+        SOURCE.CODE = PACKAGES<PACKAGE.POS,PACKAGE.SOURCE.CODE.ATTRIBUTE>
+*
+        PRINT PACKAGE.NAME : ' will be installed to ' : INSTALL.LOCATION : '.'
+*
+        READ ITEM FROM INSTALL.FILE,PACKAGE.NAME THEN
+            PRINT PACKAGE.NAME : ' already exists, do you want to overwrite? (y/n) ' :
+            INPUT ANSWER
+            
+            IF ANSWER # 'Y' THEN
+                PRINT 'No changes made.'
+                PRINT
+                RETURN
+            END
+        END
+*
+        CURL.COMMAND = 'curl --silent ' : SOURCE.CODE
+        CURL.COMMAND = 'SH -c "' : CURL.COMMAND : '"'
+*
+        EXECUTE CURL.COMMAND CAPTURING CODE.CONTENT
+*
+        IF CODE.CONTENT[1,1] # '*' THEN
+            PRINT 'Invalid package start. Please check the repo.'
+            PRINT 'No changes made.'
+            PRINT
+            RETURN
+        END
+*
+        PRINT '-> Saving the source code.'
+        WRITE CODE.CONTENT ON INSTALL.FILE,PACKAGE.NAME
+*
+        PRINT '-> Compiling the source code.'
+        EXECUTE 'BASIC ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
+*
+        READ VOC.ENTRY FROM VOC.FILE,PACKAGE.NAME THEN
+            PRINT
+            PRINT '=== ' : PACKAGE.NAME : ' is already in the master dictionary.'
+*
+            PRINT
+            LINES = DCOUNT(VOC.ENTRY,@AM)
+            FOR LINE = 1 TO LINES
+                PRINT VOC.ENTRY<LINE>
+            NEXT I
+            PRINT
+*
+            PRINT 'Do you want to overwrite it? (y/n) ' :
+            INPUT ANSWER
+*
+            IF ANSWER = 'Y' THEN
+                PRINT '-> Cataloging ' : PACKAGE.NAME : '.'
+                EXECUTE 'CATALOG ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
+            END
+        END
+*
+        PRINT PACKAGE.NAME : ' installed to ' : INSTALL.LOCATION : '.'
+        PRINT
+*
+    END
+*
+    STOP
+*
+*********************  S U B R O U T I N E  *********************
+*
+GET.PACKAGES:NULL
+*
+    PACKAGES = ''
+*
+    PACKAGES<1,PACKAGE.NAME.ATTRIBUTE> = 'EVA'
+    PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '4'
+    PACKAGES<1,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/eva'
+    PACKAGES<1,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'EVA is a modal editor for UniVerse and D3. It is multivalue aware and can be used to edit BASIC programs, PROCs, multivalue records and any other files that you can access from UniVerse and D3.'
+    PACKAGES<1,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/eva/main/EVA'
+*
+    PACKAGES<2,PACKAGE.NAME.ATTRIBUTE> = 'NSH'
+    PACKAGES<2,PACKAGE.VERSION.ATTRIBUTE> = '6'
+    PACKAGES<2,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/nsh'
+    PACKAGES<2,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'NovaShell is a fancier shell for multiValue databases.'
+    PACKAGES<2,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/nsh/main/NSH'
+*
+    PACKAGES<3,PACKAGE.NAME.ATTRIBUTE> = 'UPM'
+    PACKAGES<3,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<3,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/upm'
+    PACKAGES<3,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Universe Package Manager.'
+    PACKAGES<3,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/upm/main/UPM'
+*
+    NUMBER.OF.PACKAGES = DCOUNT(PACKAGES,@AM)
+*
+    RETURN
+*
+*********************  S U B R O U T I N E  *********************
+*
+DISPLAY.PACKAGE:NULL
+*
+    PRINT 'NAME' 'L#15': PACKAGE<1,PACKAGE.NAME.ATTRIBUTE>
+    PRINT 'VERSION' 'L#15': PACKAGE<1,PACKAGE.VERSION.ATTRIBUTE>
+    PRINT 'REPO' 'L#15': PACKAGE<1,PACKAGE.REPOSITORY.ATTRIBUTE>
+    PRINT 'DESCRIPTION' 'L#15': PACKAGE<1,PACKAGE.DESCRIPTION.ATTRIBUTE>
+    PRINT
+*
+    RETURN
+*
+*
+*********************  S U B R O U T I N E  *********************
+*
+PROCESS.SHOW.COMMAND:NULL
+*
+    FOR I = 1 TO NUMBER.OF.PACKAGES
+        SEARCH.STRING = PACKAGES<I,PACKAGE.NAME.ATTRIBUTE> : ' ' : PACKAGES<I,PACKAGE.DESCRIPTION.ATTRIBUTE>
+*
+        IF INDEX(OCONV(SEARCH.STRING,'MCU'),OCONV(ACTION,'MCU'),1) # 0 THEN
+            PACKAGE = PACKAGES<I>
+            GOSUB DISPLAY.PACKAGE
+        END
+    NEXT I
+*
+    RETURN
+*
+* END OF PROGRAM.
+*
+    END
