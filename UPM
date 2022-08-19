@@ -140,7 +140,10 @@
             IF ANSWER = 'Y' THEN
                 PRINT '-> Cataloging ' : PACKAGE.NAME : '.'
                 EXECUTE 'CATALOG ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
+            END ELSE
+                PRINT PACKAGE.NAME : ' has not been cataloged again.'
             END
+*
         END ELSE
             PRINT '-> Cataloging ' : PACKAGE.NAME : '.'
             EXECUTE 'CATALOG ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
