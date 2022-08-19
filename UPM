@@ -114,8 +114,11 @@
             RETURN
         END
 *
+        PRINT '-> Running UNDEF.'
+        GOSUB UNDEF
+*
         PRINT '-> Saving the source code.'
-        WRITE CODE.CONTENT ON INSTALL.FILE,PACKAGE.NAME
+        WRITE CODE.LINES ON INSTALL.FILE,PACKAGE.NAME
 *
         PRINT '-> Compiling the source code.'
         EXECUTE 'BASIC ' : INSTALL.LOCATION : ' ' : PACKAGE.NAME CAPTURING RESULTS
@@ -211,6 +214,65 @@ PROCESS.SHOW.COMMAND:NULL
     NEXT I
 *
     RETURN
+*
+*********************  S U B R O U T I N E  *********************
+*
+UNDEF:NULL
+*
+    CODE.LINES = ''
+*
+    NUMBER.OF.LINES = DCOUNT(CODE.CONTENT,@AM)
+*
+    SYMBOLS = ''
+    CTR = 0 
+*
+    LOOP UNTIL CTR > NUMBER.OF.LINES DO
+        CTR = CTR + 1
+        LINE = CODE.CONTENT<CTR>
+*
+        IF INDEX(LINE,"$DEFINE",1) # 0 THEN
+            LINE = TRIM(LINE)
+            SYMBOL = FIELD(LINE,' ',2)
+            SYMBOLS<-1> = SYMBOL
+            CONTINUE
+        END
+*
+        IF INDEX(LINE,'$IFDEF',1) # 0 THEN
+            LINE = TRIM(LINE)
+            SYMBOL = FIELD(LINE,' ',2)
+*
+            LOCATE(SYMBOL,SYMBOLS;ANYPOS) THEN
+                CONTINUE
+            END
+*
+            CTR = CTR + 1
+            LINE = CODE.CONTENT<CTR>
+            STACK = 1
+*
+            LOOP UNTIL STACK # 0 DO
+                IF INDEX(LINE,'$IFDEF',1) # 0 THEN
+                    STACK = STACK + 1
+                END
+*
+                IF INDEX(LINE,'$ENDDEF',1) # 0 THEN
+                    STACK = STACK - 1
+                END
+*
+                CTR = CTR + 1
+                LINE = CODE.CONTENT<CTR>
+*
+            REPEAT
+*
+            CONTINUE
+        END
+*
+        IF INDEX(LINE,'$ENDIF',1) # 0 THEN
+            CONTINUE
+        END
+*        
+        CODE.LINES<-1> = LINE
+*
+    REPEAT
 *
 * END OF PROGRAM.
 *
