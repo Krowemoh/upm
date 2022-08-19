@@ -265,7 +265,7 @@ UNDEF:NULL
             CONTINUE
         END
 *
-        IF INDEX(LINE,'$ENDIF',1) # 0 THEN
+        IF INDEX(LINE,'$ENDIF',1) # 0 AND INDEX(LINE,'"',1) = 0 AND INDEX(LINE,"'",1) = 0 THEN
             CONTINUE
         END
 *        
