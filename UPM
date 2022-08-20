@@ -102,10 +102,19 @@
             END
         END
 *
-        CURL.COMMAND = 'curl --silent ' : SOURCE.CODE : '?foo=' : TIME()
-        CURL.COMMAND = 'SH -c "' : CURL.COMMAND : '"'
+        CURL.COMMAND = 'curl --silent --insecure ' : SOURCE.CODE : '?foo=' : TIME()
 *
-        EXECUTE CURL.COMMAND CAPTURING CODE.CONTENT
+        IF VERB = 'INSTALL-WIN' OR VERB = 'INSTALL-D3WIN' THEN
+            EXECUTE '!' : CURL.COMMAND : ' -o C:\temp\UPM.CURL.FILE.txt'
+            EXECUTE '!replace C:\temp\UPM.CURL.FILE.txt'
+            EXECUTE '!type C:\temp\UPM.CURL.FILE.txt' CAPTURING CODE.CONTENT
+*            
+            CODE.CONTENT = CHANGE(CODE.CONTENT,CHAR(13):CHAR(10),@AM)
+*
+        END ELSE
+            CURL.COMMAND = 'SH -c "' : CURL.COMMAND : '"'
+            EXECUTE CURL.COMMAND CAPTURING CODE.CONTENT
+        END
 *
         IF CODE.CONTENT[1,1] # '*' THEN
             PRINT 'Invalid package start. Please check the repo.'
