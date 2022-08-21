@@ -178,7 +178,7 @@ GET.PACKAGES:NULL
     PACKAGES<1,PACKAGE.NAME.ATTRIBUTE> = 'EVA'
     PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '4'
     PACKAGES<1,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/eva'
-    PACKAGES<1,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'EVA is a modal editor for UniVerse and D3. It is multivalue aware and can be used to edit BASIC programs, PROCs, multivalue records and any other files that you can access from UniVerse and D3.'
+    PACKAGES<1,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'EVA is a modal text editor for UniVerse and D3.'
     PACKAGES<1,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/eva/main/EVA'
 *
     PACKAGES<2,PACKAGE.NAME.ATTRIBUTE> = 'NSH'
@@ -204,6 +204,12 @@ GET.PACKAGES:NULL
     PACKAGES<5,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/git-push'
     PACKAGES<5,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Git Add, Commit and Push'
     PACKAGES<5,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/git-push/main/GIT.PUSH'
+*
+    PACKAGES<6,PACKAGE.NAME.ATTRIBUTE> = 'WATCH'
+    PACKAGES<6,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<6,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/watch-basic'
+    PACKAGES<6,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Watch files and automatically compile them on change'
+    PACKAGES<6,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/watch-basic/main/WATCH'
 *
     NUMBER.OF.PACKAGES = DCOUNT(PACKAGES,@AM)
 *
