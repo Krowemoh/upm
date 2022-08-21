@@ -199,6 +199,12 @@ GET.PACKAGES:NULL
     PACKAGES<4,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'An alternative alternative line editor for Universe and D3'
     PACKAGES<4,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/aae/main/AAE'
 *
+    PACKAGES<5,PACKAGE.NAME.ATTRIBUTE> = 'GIT.PUSH'
+    PACKAGES<5,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<5,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/git-push'
+    PACKAGES<5,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Git Add, Commit and Push'
+    PACKAGES<5,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/git-push/main/GIT.PUSH'
+*
     NUMBER.OF.PACKAGES = DCOUNT(PACKAGES,@AM)
 *
     RETURN
