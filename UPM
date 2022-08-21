@@ -1,6 +1,7 @@
 *
     GIT.FILENAME = 'UPM'
     GIT.REPO = 'https://github.com/Krowemoh/upm.git'
+    TEST = 1
 *
 *ASI********************************************************************
 *                                                                      *
