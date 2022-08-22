@@ -129,7 +129,10 @@
 *
         IF VERB = 'INSTALL-D3' OR VERB = 'INSTALL-D3WIN' THEN
             PRINT '-> Running UNDEF.'
+            CODE.LINES = ''
             GOSUB UNDEF
+        END ELSE 
+            CODE.LINES = CODE.CONTENT
         END
 *
         PRINT '-> Saving the source code.'
@@ -248,8 +251,6 @@ PROCESS.SHOW.COMMAND:NULL
 *********************  S U B R O U T I N E  *********************
 *
 UNDEF:NULL
-*
-    CODE.LINES = ''
 *
     NUMBER.OF.LINES = DCOUNT(CODE.CONTENT,@AM)
 *
