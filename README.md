@@ -4,7 +4,7 @@ The Universe Package Manager is a package manager for multivalue. Currently it o
 
 ## Installation Instructions
 
-Get the UPM file.
+Get UPM.
 
 ```
 $ curl https://raw.githubusercontent.com/Krowemoh/upm/main/UPM -o /home/SYSPROG/MPROCLIB/UPM
