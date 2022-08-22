@@ -127,8 +127,10 @@
             RETURN
         END
 *
-        PRINT '-> Running UNDEF.'
-        GOSUB UNDEF
+        IF VERB = 'INSTALL-D3' OR VERB = 'INSTALL-D3WIN' THEN
+            PRINT '-> Running UNDEF.'
+            GOSUB UNDEF
+        END
 *
         PRINT '-> Saving the source code.'
         WRITE CODE.LINES ON INSTALL.FILE,PACKAGE.NAME
