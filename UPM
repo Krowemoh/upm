@@ -181,7 +181,7 @@ GET.PACKAGES:NULL
     PACKAGES = ''
 *
     PACKAGES<1,PACKAGE.NAME.ATTRIBUTE> = 'EVA'
-    PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '4'
+    PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '7'
     PACKAGES<1,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/eva'
     PACKAGES<1,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'EVA is a modal text editor for UniVerse and D3.'
     PACKAGES<1,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/eva/main/EVA'
