@@ -220,6 +220,18 @@ GET.PACKAGES:NULL
     PACKAGES<6,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Watch files and automatically compile them on change'
     PACKAGES<6,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/watch-basic/main/WATCH'
 *
+    PACKAGES<7,PACKAGE.NAME.ATTRIBUTE> = 'NPP'
+    PACKAGES<7,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<7,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/npp'
+    PACKAGES<7,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Open files in Notepad++ from TCL'
+    PACKAGES<7,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/aae/main/AAE'
+*
+    PACKAGES<8,PACKAGE.NAME.ATTRIBUTE> = 'VSC'
+    PACKAGES<8,PACKAGE.VERSION.ATTRIBUTE> = '1'
+    PACKAGES<8,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/vsc'
+    PACKAGES<8,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'Open files in VSCode from TCL'
+    PACKAGES<8,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/vsc/main/VSC'
+*
     NUMBER.OF.PACKAGES = DCOUNT(PACKAGES,@AM)
 *
     RETURN
