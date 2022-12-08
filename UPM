@@ -185,13 +185,13 @@ GET.PACKAGES:NULL
     PACKAGES = ''
 *
     PACKAGES<1,PACKAGE.NAME.ATTRIBUTE> = 'EVA'
-    PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '7'
+    PACKAGES<1,PACKAGE.VERSION.ATTRIBUTE> = '8'
     PACKAGES<1,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/eva'
     PACKAGES<1,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'EVA is a modal text editor for UniVerse and D3.'
     PACKAGES<1,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/eva/main/EVA'
 *
     PACKAGES<2,PACKAGE.NAME.ATTRIBUTE> = 'NSH'
-    PACKAGES<2,PACKAGE.VERSION.ATTRIBUTE> = '6'
+    PACKAGES<2,PACKAGE.VERSION.ATTRIBUTE> = '8'
     PACKAGES<2,PACKAGE.REPOSITORY.ATTRIBUTE> = 'https://github.com/Krowemoh/nsh'
     PACKAGES<2,PACKAGE.DESCRIPTION.ATTRIBUTE> = 'NovaShell is a fancier shell for multiValue databases.'
     PACKAGES<2,PACKAGE.SOURCE.CODE.ATTRIBUTE> = 'https://raw.githubusercontent.com/Krowemoh/nsh/main/NSH'
